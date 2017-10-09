@@ -1,32 +1,29 @@
 // Zombulator by Tyler Nielsen
 
-var zombieX = 50;
-var zombie2X = 80;
-var xMax = 1000;
-var xMin = 0;
-var speed1 = 5;
-var size = 80;
+var zombieY = 50;
+var zombieV = 0;
+var zombieA = 0.2;
+var zombieDamping = -0.5;
+var zombieSize = 80;
+var zombieColor;
+var backgroundColor;
 
 function setup() {
-  createCanvas(xMax, 1000);
+  createCanvas(windowWidth, windowHeight);
+  backgroundColor = color(0, 0, 0);
+  zombieColor = color(242, 255, 0);
 }
 
 function draw() {
-  background(255, 255, 255);
-  fill(random(255), random(255), random(255));
-  strokeWeight(4);
-  ellipse(zombieX, 50, 80, 80);
-  fill(150, 150, 200);
-  ellipse(200, 100, 80, 80);
-  zombieX = zombieX + speed1;
-  
-  if(zombieX >= xMax || zombieX <= xMin) {
-    zombieX = -1 * zombieX;
-//    speed1 = speed1 + 5;
-//    size = size + 20;
+  background(backgroundColor);
+  noStroke();
+  fill(zombieColor);
+  ellipse(windowWidth / 2, zombieY, zombieSize, zombieSize);
+  zombieY += zombieV;
+  zombieV += zombieA;
+  if (zombieY + (zombieSize / 2) >= windowHeight) {
+    zombieY = windowHeight - (zombieSize / 2);
+    zombieV *= zombieDamping;
+    // zombieSize *= 0.8;
   }
-  if(zombie2X >= xMin) {
-    zombie2X = 0;
-  }
-
 }
