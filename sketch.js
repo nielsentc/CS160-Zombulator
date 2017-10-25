@@ -75,7 +75,6 @@ function initializeHuman(index) {
     speed: random(0.25, 3),
     size: random(MIN_SIZE, MAX_SIZE),
     color: color(random(50, 150), random(50, 150), random(150, 255), 150)
-    
   };
 }
 
@@ -100,7 +99,30 @@ function moveHumans() {
 
 function moveHuman(human) {
   // wlllllaaaaaauuuugggghhhhh!
+  direction = random(0, 3);
+  if (human.direction == 0) {
+    moveLeft();
+  } else if (human.direction == 1) {
+    moveRight();
+  } else if (human.direction == 2) {
+    moveUp();
+  } else if (human.direction == 3) {
+    moveDown();
+  }
+}
+
+funtion moveLeft() {
   
-  //human.x += human.speed;
-  human.y += -1*(human.speed);
+}
+
+funtion moveRight() {
+  
+}
+
+funtion moveUp() {
+  
+}
+
+funtion moveDown() {
+  
 }
