@@ -101,18 +101,18 @@ function moveHumans() {
 
 function moveHuman(human) {
   // wlllllaaaaaauuuugggghhhhh!
-  humand = rand(4);
-  if (humand == 0) {
-    moveLeft(humans[i]);
+  human.d = rand(4);
+  if (human.d == 0) {
+    moveLeft(human);
   }
-  else if (humand == 1) {
-    moveRight(humans[i]);
+  else if (human.d == 1) {
+    moveRight(human);
   }
-  else if (humand == 2) {
-    moveUp(humans[i]);
+  else if (human.d == 2) {
+    moveUp(human);
   }
   else {
-    moveDown(humans[i]);
+    moveDown(human);
   }
 }
 
