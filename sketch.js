@@ -72,6 +72,8 @@ function initializeHuman(index) {
   humans[index] = {
     x: random(0, windowWidth),
     y: random(windowHeight - 200, windowHeight),
+    d: rand(0, 4),
+    // v: p5.Vector(x, y),
     speed: random(0.25, 3),
     size: random(MIN_SIZE, MAX_SIZE),
     color: color(random(50, 150), random(50, 150), random(150, 255), 150)
@@ -99,30 +101,33 @@ function moveHumans() {
 
 function moveHuman(human) {
   // wlllllaaaaaauuuugggghhhhh!
-  direction = random(0, 3);
-  if (human.direction == 0) {
-    moveLeft();
-  } else if (human.direction == 1) {
-    moveRight();
-  } else if (human.direction == 2) {
-    moveUp();
-  } else if (human.direction == 3) {
-    moveDown();
+  humand = rand(4);
+  if (humand == 0) {
+    moveLeft(humans[i]);
+  }
+  else if (humand == 1) {
+    moveRight(humans[i]);
+  }
+  else if (humand == 2) {
+    moveUp(humans[i]);
+  }
+  else {
+    moveDown(humans[i]);
   }
 }
 
-funtion moveLeft() {
-  
+function moveLeft(human) {
+  human.x += human.speed;
 }
 
-funtion moveRight() {
-  
+function moveRight(human) {
+  human.x -= human.speed;
 }
 
-funtion moveUp() {
-  
+function moveUp(human) {
+  human.y += human.speed;
 }
 
-funtion moveDown() {
-  
+function moveDown(human) {
+  human.y -= human.speed;
 }
