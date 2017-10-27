@@ -84,7 +84,7 @@ function drawHumans() {
   for (var i = 0; i < NUMBER_OF_HUMANS; ++i) {
     drawHuman(humans[i]); // TODO
   }
-}
+} 
 
 function drawHuman(human) { // TODO
   fill(human.color);
@@ -108,7 +108,7 @@ function moveHuman(human) {
   else if (human.d == 1) {
     moveRight(human);
   }
-  else if (human.d == 2) {
+  else if (human.d == 2 || human.d == 3) {
     moveUp(human);
   }
   else {
