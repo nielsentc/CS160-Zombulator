@@ -88,13 +88,29 @@ function initializeHumans() {
 
 // TODO: Refactor according to usage in initializeHumans above.
 //       Should _return_ a human object.
-function initializeHuman(index) {
-  humans[index] = {
+function initializeHuman() {
+  return {
     x: random(0, windowWidth),
     y: random(windowHeight - 200, windowHeight),
     speed: random(0.25, 3),
     size: random(MIN_SIZE, MAX_SIZE),
-    color: color(random(50, 150), random(50, 150), random(150, 255), 150)
+    color: color(random(50, 150), random(50, 150), random(150, 255), 150),
+    move: function () {
+      var direction = random(0, 100);
+      if (direction < 20) {
+        human.x += human.speed;
+      } else if (direction < 40) {
+        human.x -= human.speed;
+      } else if (direction < 60) {
+        human.y += human.speed;
+      } else {
+        human.y -= human.speed;
+      }
+    },
+    draw: function() {
+      fill(this.color);
+      ellipse(this.x, this.y, this.size, this.size);
+    },
   };
 }
 
@@ -104,28 +120,8 @@ function drawHumans() {
   }
 }
 
-// TODO: Extract into object member function, then delete this.
-function drawHuman(human) {
-  fill(human.color);
-  ellipse(human.x, human.y, human.size, human.size);
-}
-
 function moveHumans() {
   for (var i = 0; i < NUMBER_OF_HUMANS; ++i) {
     humans[i].move();
-  }
-}
-
-// TODO: Extract into object member function, then delete this.
-function moveHuman(human) {
-  var direction = random(0, 100);
-  if (direction < 20) {
-    human.x += human.speed;
-  } else if (direction < 40) {
-    human.x -= human.speed;
-  } else if (direction < 60) {
-    human.y += human.speed;
-  } else {
-    human.y -= human.speed;
   }
 }
