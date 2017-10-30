@@ -11,7 +11,7 @@ const NUMBER_OF_HUMANS = 100;
 
 var zombies;
 var humans;
-
+// blehpleh
 function setup() {
   createCanvas(windowWidth, windowHeight);
   backgroundColor = color(245, 255, 245);
