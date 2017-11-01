@@ -1,6 +1,6 @@
-// http://tinyurl.com/cs160ex17
-// Zombulator by YOUR NAME
-// CS 160 Exercise 17: Member functions
+// http://tinyurl.com/cs160ex19
+// Zombulator by Tyler Nielsen
+// CS 160 Exercise 19: Polymorphism
 
 var backgroundColor;
 
@@ -86,32 +86,30 @@ function initializeHumans() {
   }
 }
 
-// TODO: Refactor according to usage in initializeHumans above.
-//       Should _return_ a human object.
-function initializeHuman() {
+function initializeHuman(index) {
   return {
     x: random(0, windowWidth),
     y: random(windowHeight - 200, windowHeight),
     speed: random(0.25, 3),
     size: random(MIN_SIZE, MAX_SIZE),
     color: color(random(50, 150), random(50, 150), random(150, 255), 150),
-    move: function () {
-      var direction = random(0, 100);
-      if (direction < 20) {
-        human.x += human.speed;
-      } else if (direction < 40) {
-        human.x -= human.speed;
-      } else if (direction < 60) {
-        human.y += human.speed;
-      } else {
-        human.y -= human.speed;
-      }
-    },
     draw: function() {
       fill(this.color);
       ellipse(this.x, this.y, this.size, this.size);
     },
-  };
+    move: function() {
+      var direction = random(0, 100);
+      if (direction < 20) {
+        this.x += this.speed;
+      } else if (direction < 40) {
+        this.x -= this.speed;
+      } else if (direction < 60) {
+        this.y += this.speed;
+      } else {
+        this.y -= this.speed;
+      }
+    }
+  }
 }
 
 function drawHumans() {
