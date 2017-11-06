@@ -6,7 +6,7 @@ var backgroundColor;
 
 const MIN_SIZE = 5;
 const MAX_SIZE = 50;
-const POPULATION_SIZE = 500;
+const POPULATION_SIZE = 100;
 
 var population = [];
 
@@ -76,30 +76,28 @@ function movePopulation() {
 
 function initializeZombie() {
   return {
-    x: random(0, windowWidth),
-    y: random(0, 200),
+    position: createVector(random(0, windowWidth), random(0, 200)),
     speed: random(0.25, 3),
     size: random(MIN_SIZE, MAX_SIZE),
     color: color(random(100, 255), random(50, 150), random(50, 150), 150),
-    zomBox: this.getBoundingClientRect(),
     move: function() {
       var direction = random(0, 100);
       if (direction < 20) {
-        this.x += this.speed;
+        this.position.x += this.speed;
       } else if (direction < 40) {
-        this.x -= this.speed;
-      } else if (direction < 60) {
-        this.y -= this.speed;
+        this.position.x -= this.speed;
+      } else if (direction < 50) {
+        this.position.y -= this.speed;
       } else {
-        this.y += this.speed;
+        this.position.y += this.speed;
       }
     },
     draw: function() {
       fill(this.color);
-      ellipse(this.x, this.y, this.size, this.size);
+      ellipse(this.position.x, this.position.y, this.size, this.size);
     },
     isTouching: function(target) {
-      if (dist(attacker.x, attacker.y, target.x, target.y) <= attacker.size * 2) {
+      if (this.position.dist(target.position) <= this.size/2 + target.size/2) {
         return 1;
       } else {
         return 0;
@@ -110,30 +108,28 @@ function initializeZombie() {
 
 function initializeHuman() {
   return {
-    x: random(0, windowWidth),
-    y: random(windowHeight - 200, windowHeight),
+    position: createVector(random(0, windowWidth), random(windowHeight - 200, windowHeight)),
     speed: random(0.25, 3),
     size: random(MIN_SIZE, MAX_SIZE),
     color: color(random(50, 150), random(50, 150), random(150, 255), 150),
-    humBox: this.getBoundingClientRect(),
     move: function() {
         var direction = random(0, 100);
         if (direction < 20) {
-          this.x += this.speed;
+          this.position.x += this.speed;
         } else if (direction < 40) {
-          this.x -= this.speed;
+          this.position.x -= this.speed;
         } else if (direction < 60) {
-          this.y += this.speed;
+          this.position.y += this.speed;
         } else {
-          this.y -= this.speed;
+          this.position.y -= this.speed;
         }
       },
     draw: function() {
         fill(this.color);
-        ellipse(this.x, this.y, this.size, this.size);
+        ellipse(this.position.x, this.position.y, this.size, this.size);
     },
     isTouching: function(target) {
-      if (dist(attacker.x, attacker.y, target.x, target.y) <= attacker.size * 2) {
+      if (this.position.dist(target.position) <= this.size/2 + target.size/2) {
         return 1;
       } else {
         return 0;
