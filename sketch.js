@@ -81,6 +81,7 @@ function initializeZombie() {
     speed: random(0.25, 3),
     size: random(MIN_SIZE, MAX_SIZE),
     color: color(random(100, 255), random(50, 150), random(50, 150), 150),
+    zomBox: this.getBoundingClientRect(),
     move: function() {
       var direction = random(0, 100);
       if (direction < 20) {
@@ -98,7 +99,11 @@ function initializeZombie() {
       ellipse(this.x, this.y, this.size, this.size);
     },
     isTouching: function(target) {
-
+      if (dist(attacker.x, attacker.y, target.x, target.y) <= attacker.size * 2) {
+        return 1;
+      } else {
+        return 0;
+      }
     }
   };
 }
@@ -110,6 +115,7 @@ function initializeHuman() {
     speed: random(0.25, 3),
     size: random(MIN_SIZE, MAX_SIZE),
     color: color(random(50, 150), random(50, 150), random(150, 255), 150),
+    humBox: this.getBoundingClientRect(),
     move: function() {
         var direction = random(0, 100);
         if (direction < 20) {
@@ -127,7 +133,11 @@ function initializeHuman() {
         ellipse(this.x, this.y, this.size, this.size);
     },
     isTouching: function(target) {
-      
+      if (dist(attacker.x, attacker.y, target.x, target.y) <= attacker.size * 2) {
+        return 1;
+      } else {
+        return 0;
+      }
     }
   };
 }
