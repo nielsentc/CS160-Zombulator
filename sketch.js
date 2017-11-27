@@ -14,7 +14,7 @@ var humanCount = 0;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  backgroundColor = color(245, 255, 245);
+  backgroundColor = color(20, 20, 20);
   initializePopulation();
 }
 
@@ -42,16 +42,33 @@ function handleCollisions() {
 
 function fight(a, t){
   print("It's a fight!");
+  if (a.size >= t.size) {
+    if (a.humanoidType == "zombie") {
+      print("Attacking Z wins");
+      t.turn();
+    } else {
+      print("Attacking H wins");
+      t.kill();
+    }
+  } else {
+    if (t.humanoidType == "zombie") {
+      print("Target Z wins");
+      a.turn();
+    } else {
+      print("Target H wins");
+      a.kill();
+    }
+  }
 }
 
 function initializePopulation() {
   for (var i = 0; i < POPULATION_SIZE; ++i) {
     var humanoid_type = random(0, 100);
     if (humanoid_type <= 50) {
-      population[i] = initializeZombie();
+      population[i] = initializeZombie(i);
       ++zombieCount;
     } else {
-      population[i] = initializeHuman();
+      population[i] = initializeHuman(i);
       ++humanCount;
     }
   }
@@ -61,6 +78,7 @@ function drawPopulationCounts() {
   stroke(0);
   textSize(72);
   textAlign(CENTER);
+  color(255, 255, 102, 100);
   text("Zombies: " + zombieCount, width / 2, 100);
   text("Humans: " + humanCount, width / 2, height - 100);
 }
@@ -77,34 +95,48 @@ function movePopulation() {
   }
 }
 
-function initializeZombie() {
+function initializeZombie(location) {
   return {
     humanoidType: "zombie",
+    health: 1,
     x: random(0, windowWidth),
     y: random(0, 200),
     speed: random(0.25, 3),
     size: random(MIN_SIZE, MAX_SIZE),
-    color: color(random(100, 255), random(50, 150), random(50, 150), 150),
+    color: color(random(173, 255), random(255, 255), random(0, 47), 200),
     move: function() {
-      var direction = random(0, 100);
-      if (direction < 20) {
-        this.x += this.speed;
-      } else if (direction < 40) {
-        this.x -= this.speed;
-      } else if (direction < 60) {
-        this.y -= this.speed;
-      } else {
-        this.y += this.speed;
+      if (this.health != 0) {
+        var direction = random(0, 100);
+        if (direction < 20) {
+         this.x += this.speed;
+        } else if (direction < 40) {
+          this.x -= this.speed;
+        } else if (direction < 60) {
+         this.y -= this.speed;
+        } else {
+         this.y += this.speed;
+       }
       }
     },
     draw: function() {
-      fill(this.color);
-      ellipse(this.x, this.y, this.size, this.size);
+      if (this.health != 0) {
+        fill(this.color);
+        ellipse(this.x, this.y, this.size, this.size);
+      }
     },
     isTouching: function(target) {
-      if (this.humanoidType == target.humanoidType) return false;
-      var distance = dist(this.x, this.y, target.x, target.y);
-      return distance <= (this.size/2 + target.size/2);
+      if (this.health != 0) {
+        if (this.humanoidType == target.humanoidType) return false;
+        var distance = dist(this.x, this.y, target.x, target.y);
+        return distance <= (this.size/2 + target.size/2);
+      }
+    },
+    kill: function() {
+      //population.splice(i, 1);
+      this.health = 0;
+      this.x = -100;
+      this.y = -100;
+      zombieCount--;
     }
   };
 }
@@ -116,7 +148,7 @@ function initializeHuman() {
     y: random(windowHeight - 200, windowHeight),
     speed: random(0.25, 3),
     size: random(MIN_SIZE, MAX_SIZE),
-    color: color(random(50, 150), random(50, 150), random(150, 255), 150),
+    color: color(random(200, 255), random(130, 175), random(0, 30), 200),
     move: function() {
         var direction = random(0, 100);
         if (direction < 20) {
@@ -137,6 +169,13 @@ function initializeHuman() {
       if (this.humanoidType == target.humanoidType) return false;
       var distance = dist(this.x, this.y, target.x, target.y);
       return distance <= (this.size/2 + target.size/2);
+    },
+    turn: function() {
+      //this.humanoidType = "zombie";
+      // this.humanoidType = "zombie";
+      // this.color = color(random(173, 255), random(255, 255), random(0, 47), 200);
+      // humanCount--;
+      // zombieCount++;
     }
   };
 }
