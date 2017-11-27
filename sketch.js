@@ -12,6 +12,12 @@ var population = [];
 var zombieCount = 0;
 var humanCount = 0;
 
+var costanza;
+
+function preload() {
+  costanza = loadImage("https://i.imgur.com/tG8Adl7.png");
+}
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   backgroundColor = color(20, 20, 20);
@@ -19,7 +25,7 @@ function setup() {
 }
 
 function draw() {
-  background(backgroundColor);
+  background(costanza);
   noStroke();
   drawPopulation();
   movePopulation();
