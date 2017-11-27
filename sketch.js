@@ -1,18 +1,16 @@
-// http://tinyurl.com/cs160ex20
 // Zombulator by Tyler Nielsen
-// CS 160 Exercise 20: Collisions
+// CS 160 Final
 
 var backgroundColor;
 
 const MIN_SIZE = 5;
 const MAX_SIZE = 50;
-const POPULATION_SIZE = 100;
+const POPULATION_SIZE = 500;
 
 var population = [];
 
 var zombieCount = 0;
 var humanCount = 0;
-var fightCount = 0;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -30,15 +28,11 @@ function draw() {
 }
 
 function handleCollisions() {
-  //print("fight");
-  for (var i = 0; i < POPULATION_SIZE; ++i) {
-    var attacker = population [i];
+  for(var i = 0; i < POPULATION_SIZE; ++i) {
+    var attacker = population[i];
     for (var j = i + 1; j < POPULATION_SIZE; ++j) {
-      var target = population [j];
-
+      var target = population[j];
       if (attacker.isTouching(target)) {
-        //++fightCount;
-        //text("Fight Count" + fightCount, width / 2, height - 200);
         print("Fight! Fight! Fight!");
       }
     }
@@ -81,25 +75,26 @@ function movePopulation() {
 function initializeZombie() {
   return {
     humanoidType: "zombie",
-    position: createVector(random(0, windowWidth), random(0, 200)),
+    x: random(0, windowWidth),
+    y: random(0, 200),
     speed: random(0.25, 3),
     size: random(MIN_SIZE, MAX_SIZE),
     color: color(random(100, 255), random(50, 150), random(50, 150), 150),
     move: function() {
       var direction = random(0, 100);
       if (direction < 20) {
-        this.position.x += this.speed;
+        this.x += this.speed;
       } else if (direction < 40) {
-        this.position.x -= this.speed;
-      } else if (direction < 50) {
-        this.position.y -= this.speed;
+        this.x -= this.speed;
+      } else if (direction < 60) {
+        this.y -= this.speed;
       } else {
-        this.position.y += this.speed;
+        this.y += this.speed;
       }
     },
     draw: function() {
       fill(this.color);
-      ellipse(this.position.x, this.position.y, this.size, this.size);
+      ellipse(this.x, this.y, this.size, this.size);
     },
     isTouching: function(target) {
       if (this.humanoidType == target.humanoidType) return false;
@@ -112,25 +107,26 @@ function initializeZombie() {
 function initializeHuman() {
   return {
     humanoidType: "human",
-    position: createVector(random(0, windowWidth), random(windowHeight - 200, windowHeight)),
+    x: random(0, windowWidth),
+    y: random(windowHeight - 200, windowHeight),
     speed: random(0.25, 3),
     size: random(MIN_SIZE, MAX_SIZE),
     color: color(random(50, 150), random(50, 150), random(150, 255), 150),
     move: function() {
         var direction = random(0, 100);
         if (direction < 20) {
-          this.position.x += this.speed;
+          this.x += this.speed;
         } else if (direction < 40) {
-          this.position.x -= this.speed;
+          this.x -= this.speed;
         } else if (direction < 60) {
-          this.position.y += this.speed;
+          this.y += this.speed;
         } else {
-          this.position.y -= this.speed;
+          this.y -= this.speed;
         }
       },
     draw: function() {
         fill(this.color);
-        ellipse(this.position.x, this.position.y, this.size, this.size);
+        ellipse(this.x, this.y, this.size, this.size);
     },
     isTouching: function(target) {
       if (this.humanoidType == target.humanoidType) return false;
