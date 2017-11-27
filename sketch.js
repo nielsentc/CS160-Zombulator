@@ -35,7 +35,9 @@ function handleCollisions() {
       if (attacker.isTouching(target)) {
         print("Fight! Fight! Fight!");
         fight(attacker, target);
-      }
+      } //else if (attacker.isHunting(target)) {
+
+      // }
     }
   }
 }
@@ -76,11 +78,11 @@ function initializePopulation() {
 
 function drawPopulationCounts() {
   stroke(0);
-  textSize(72);
+  textSize(50);
   textAlign(CENTER);
   color(255, 255, 102, 100);
-  text("Zombies: " + zombieCount, width / 2, 100);
-  text("Humans: " + humanCount, width / 2, height - 100);
+  text("Zombies: " + zombieCount, 200, 100);
+  text("Humans: " + humanCount, width - 200, height - 100);
 }
 
 function drawPopulation() {
@@ -126,7 +128,7 @@ function initializeZombie(location) {
     },
     isTouching: function(target) {
       if (this.health != 0) {
-        if (this.humanoidType == target.humanoidType) return false;
+        if (this.humanoidType == target.humanoidType || target.health == 0) return false;
         var distance = dist(this.x, this.y, target.x, target.y);
         return distance <= (this.size/2 + target.size/2);
       }
@@ -134,8 +136,8 @@ function initializeZombie(location) {
     kill: function() {
       //population.splice(i, 1);
       this.health = 0;
-      this.x = -100;
-      this.y = -100;
+      //this.x = -1000;
+      //this.y = -1000;
       zombieCount--;
     }
   };
@@ -144,6 +146,7 @@ function initializeZombie(location) {
 function initializeHuman() {
   return {
     humanoidType: "human",
+    health: 1,
     x: random(0, windowWidth),
     y: random(windowHeight - 200, windowHeight),
     speed: random(0.25, 3),
@@ -166,7 +169,7 @@ function initializeHuman() {
         ellipse(this.x, this.y, this.size, this.size);
     },
     isTouching: function(target) {
-      if (this.humanoidType == target.humanoidType) return false;
+      if (this.humanoidType == target.humanoidType || target.health == 0) return false;
       var distance = dist(this.x, this.y, target.x, target.y);
       return distance <= (this.size/2 + target.size/2);
     },
