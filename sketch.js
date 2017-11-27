@@ -34,9 +34,14 @@ function handleCollisions() {
       var target = population[j];
       if (attacker.isTouching(target)) {
         print("Fight! Fight! Fight!");
+        fight(attacker, target);
       }
     }
   }
+}
+
+function fight(a, t){
+  print("It's a fight!");
 }
 
 function initializePopulation() {
