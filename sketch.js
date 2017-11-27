@@ -13,9 +13,11 @@ var zombieCount = 0;
 var humanCount = 0;
 
 var costanza;
+var meat;
 
 function preload() {
   costanza = loadImage("https://i.imgur.com/tG8Adl7.png");
+  meat = loadImage("https://i.imgur.com/BPOCpmc.jpg");
 }
 
 function setup() {
@@ -130,6 +132,8 @@ function initializeZombie(location) {
       if (this.health != 0) {
         fill(this.color);
         ellipse(this.x, this.y, this.size, this.size);
+      } else {
+        new Image(meat, this.x, this.y, this.size, this.size);
       }
     },
     isTouching: function(target) {
@@ -158,6 +162,7 @@ function initializeHuman() {
     speed: random(0.25, 3),
     size: random(MIN_SIZE, MAX_SIZE),
     color: color(random(200, 255), random(130, 175), random(0, 30), 200),
+    Zcolor: color(random(173, 255), random(255, 255), random(0, 47), 200),
     move: function() {
         var direction = random(0, 100);
         if (direction < 20) {
@@ -171,20 +176,30 @@ function initializeHuman() {
         }
       },
     draw: function() {
+      if (this.health != 0) {  
         fill(this.color);
         ellipse(this.x, this.y, this.size, this.size);
+      } else {
+        fill(this.Zcolor);
+        ellipse(this.x, this.y, this.size, this.size);
+      }
     },
     isTouching: function(target) {
-      if (this.humanoidType == target.humanoidType || target.health == 0) return false;
-      var distance = dist(this.x, this.y, target.x, target.y);
-      return distance <= (this.size/2 + target.size/2);
+      if (this.health != 0) { 
+        if (this.humanoidType == target.humanoidType || target.health == 0) return false;
+        var distance = dist(this.x, this.y, target.x, target.y);
+        return distance <= (this.size/2 + target.size/2);
+      } else {
+        // if (this.humanoidType != target.humanoidType || target.health == 0) return false;
+        // var distance = dist(this.x, this.y, target.x, target.y);
+        // return distance <= (this.size/2 + target.size/2);
+      }
     },
     turn: function() {
-      //this.humanoidType = "zombie";
-      // this.humanoidType = "zombie";
-      // this.color = color(random(173, 255), random(255, 255), random(0, 47), 200);
-      // humanCount--;
-      // zombieCount++;
+      this.health = 0;
+      this.color = color(random(173, 255), random(255, 255), random(0, 47), 200);
+      humanCount--;
+      zombieCount++;
     }
   };
 }
