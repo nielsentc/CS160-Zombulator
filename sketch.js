@@ -16,8 +16,8 @@ var costanza;
 var meat;
 
 function preload() {
-  costanza = loadImage("https://i.imgur.com/tG8Adl7.png");
-  meat = loadImage("https://i.imgur.com/BPOCpmc.jpg");
+  //costanza = loadImage("https://i.imgur.com/tG8Adl7.png");
+  //meat = loadImage("https://i.imgur.com/BPOCpmc.jpg");
 }
 
 function setup() {
@@ -27,7 +27,7 @@ function setup() {
 }
 
 function draw() {
-  background(costanza);
+  background(backgroundColor);
   noStroke();
   drawPopulation();
   movePopulation();
